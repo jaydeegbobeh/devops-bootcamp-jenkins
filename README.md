@@ -71,4 +71,4 @@
     - `npm install`
     - `npm test`
     - `npm start`
-- Add webhook
+- Add webhook to repo, new build everytime you push
