@@ -8,7 +8,8 @@
 # Continuous intergration and continuous delivery/deployment (CI/CD)
 - In CI/CD the development, testing, and operations teams work collaboritively to implement productive workflows within the SDLC pipeline. 
 
-![](../images/CICD.png)
+![](images/CICD.png)
+
 - **Continuous intergration** - implementing small changes and check in code to version control repositories frequently
 	- run automatic code quality scans on it and generate a report of how well latest changes adhere to good coding practices
 	- build code and run any automated tests that you might have written to make sure changes don't break functionality
