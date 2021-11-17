@@ -53,9 +53,20 @@
 - You can utilize container technology such as **Docker**, initiate tests and then take actions like rolling back/forward in production.
 
 ## Docker
-- Docker allows your to containerise your app, companies such as Paypal and Spotify use Docker.
+- Docker allows you to containerise your app, companies such as Paypal and Spotify use Docker.
 - Allows you yo build a container imahe and use the same image across every step of the deployment process
 - Separate non-dependent steps and run them in parallel
 - Run apps in containers rather than VMs
 - Run unit tests as part of your docker build command by adding a target for them in your Dockerfile. This way, as you are making changes and rebuilding locally, you can run the same unit tests you would run in the CI on your local machine using a simple command.
 - Once you build docker image, you deploy it e.g Amazon EC2 container supports Docker images
+
+
+## Jenkins pipline
+- Private ssh key available, source code available in git
+- Github repo with source code
+- SSH set up
+- App code available on github
+- `cd app`
+- `npm install`
+- `npm test`
+- `npm start`
