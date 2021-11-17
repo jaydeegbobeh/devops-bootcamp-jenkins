@@ -66,7 +66,9 @@
 - Github repo with source code
 - SSH set up
 - App code available on github
-- `cd app`
-- `npm install`
-- `npm test`
-- `npm start`
+- Add shell
+    - `cd app`
+    - `npm install`
+    - `npm test`
+    - `npm start`
+- Add webhook
