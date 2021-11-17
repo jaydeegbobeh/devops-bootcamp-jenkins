@@ -1,77 +1,59 @@
-# Software Development Lifecycle (SDLC)
-- Plan/Design
-- Develop
-- Test
-- Deploy
+# Let's build a Continuous Integration and Continuous Delivery/Deployment (CICD) Pipeline
+## Jenkins
+### Webhooks with Git-hub
+#### Automated Testing using Jenkins
+#### Automated Deployment on AWS EC2 for 2Tier architecture - Nodejs app and Mongodb  
 
 
-# Continuous intergration and continuous delivery/deployment (CI/CD)
-- In CI/CD the development, testing, and operations teams work collaboritively to implement productive workflows within the SDLC pipeline. 
+- Jenkins Workflow
+  
+![](images/jenkins.png)
 
+  ##### Contiounus Integration Continuous Delivery/Deployment 
 ![](images/CICD.png)
 
-- **Continuous intergration** - implementing small changes and check in code to version control repositories frequently
-	- run automatic code quality scans on it and generate a report of how well latest changes adhere to good coding practices
-	- build code and run any automated tests that you might have written to make sure changes don't break functionality
-	- generating test coverage reports to observe how thorough automated tests are
+###### Let's break it down 
+  ![](images/cicd_jenkins.png)
 
+### For deployment job in Jenkins
+- In the execute shell of CD job
 
-- **Continuous delivery** - automate software release but final step of approving and initiating a deploy to production is done manually. Beneficial if your software release day is a year away, maybe you would like to test how it manages with a large volume of users
-    - Advantages
-        - Less pressure on decisions for small changes => faster iterating
-        - Find and address bugs quicker before they become large problems, you can perfom additional and more comprehensive testing on code
-- **Continuous deployment** - automating the deployment of applications to selected infrastructure environments. 
-    - doing so in short cycles
-    - Code done -> unit tests -> integrate -> acceptance test -> deploy to production (each step is automated)
-    - Advantages
-        - Customers see continuous stream of improvements every day
-        - Releases are less risky & easier to fix if problem arises - smaller changes made
-        - Develop faster, no need to pause development for releases, deployment is triggered automatically for every change
+```
+# we need to by pass the key asking stage with below command:
+ssh -A -o "StrictHostKeyChecking=no" ubuntu@ec2-ip << EOF	
+# copy the the code
+# run your provision.sh to install node with required dependencies for app instance - same goes for db instance (ensure to double check if node and db are actively running)
 
-## CI/CD Pipeline
-### CI
-- Build 
-- Testing
-- Integration
-### CD
-- Review
-- Staging 
-- Production
+# create an env to connect to db
+# navigate to app folder
+# kill any existing pm2 process just in case
+# launch the app
+nohup node app.js > /dev/null 2>&1 & - use this command to run node app in the background
 
-## Benefits of CI/CD
-- Reduce cost
-- Faster release rate
-- Smaller code changes
-- Fault isolations
-- More test reliability
-- Increase team transparency and accountability
-- Easy maintenance and updates
+# To debug ssh into your ec2 and run the above commands
+    
 
-## Jenkins
-- Jenkins is a **CI/CD server**, facilitates CI/CD by can buiding, testing and deploying software.
-- You can set up Jenkins to watch for any code changes in places e.g **GitHub** and automatically do a build.
-- You can utilize container technology such as **Docker**, initiate tests and then take actions like rolling back/forward in production.
+EOF
+```
+## Jenkins CI Lab - Solution
 
-## Docker
-- Docker allows you to containerise your app, companies such as Paypal and Spotify use Docker.
-- Allows you to build a container imahe and use the same image across every step of the deployment process
-- Separate non-dependent steps and run them in parallel
-- Run apps in containers rather than VMs
-- Run unit tests as part of your docker build command by adding a target for them in your Dockerfile. This way, as you are making changes and rebuilding locally, you can run the same unit tests you would run in the CI on your local machine using a simple command.
-- Once you build docker image, you deploy it e.g Amazon EC2 container supports Docker images
+##### Steps
 
+##### Source Code Management
 
-## Jenkins pipline
-- Private ssh key available, source code available in git
-- Github repo with source code
-- SSH set up
-- App code available on github
-- Add webhook to repo, new build everytime you push
-- Add shell
-    - `cd app`
-    - `npm install`
-    - `npm test`
-    - `npm start`
+1. Set Branches to Build to develop
+2. Under additional behaviours click add and "Merge before build"
+3. name of repo "origin"
+4. branch to merge "main"
 
+### Post-Build Actions
 
- TEST
+#### Git Publisher
+
+1. Add Post Build Action
+2. Git Publisher
+3. Push Only if Build Succeeds
+4. Merge Results
+
+--- 
+Tigger deployment job if the merge was successfull
